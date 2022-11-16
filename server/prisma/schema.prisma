@@ -1,0 +1,192 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Settings {
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  key         String?  @unique
+  value       String?  @default("")
+  active      Boolean  @default(true)
+
+}
+
+model Admin {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  username String    @unique
+  password String
+
+  owner    String?   @db.ObjectId
+  address  String?   @unique
+
+  role     AdminRole @default(MANAGER)
+  active   Boolean   @default(true)
+
+  users    User[]   @relation("companyUsers")
+
+  logs    Log[]     @relation("adminLog")
+}
+
+model Log {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  ip        String?
+  agent     String?
+
+  adminId   String   @db.ObjectId
+  admin     Admin?   @relation("adminLog", fields: [adminId], references: [id])
+
+}
+
+model User {
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+
+  companyId     String?          @db.ObjectId
+  company       Admin?           @relation("companyUsers", fields: [companyId], references: [id])
+
+  owner         String?
+  address       String           @unique
+
+  active        Boolean          @default(true)
+  withdraw      Boolean          @default(true)
+  approve       Int?             @default(0)
+
+  plan          UserPlan?        @relation("userPlan")
+  invested      UserInvested?    @relation("userInvested")
+  withdrawn     UserWithdrawn?   @relation("userWithdrawn")
+  approves      Approve[]        @relation("userApprove")
+  transactions  Transaction[]    @relation("userTransaction")
+
+}
+
+
+model UserPlan {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  authorId   String  @db.ObjectId
+  author     User?   @relation("userPlan", fields: [authorId], references: [id])
+
+  bnb        Int?    @default(0)
+  eth        Int?    @default(0)
+  busd       Int?    @default(0)
+  usdt       Int?    @default(0)
+  cake       Int?    @default(0)
+  ada        Int?    @default(0)
+  shiba      Int?    @default(0)
+  doge       Int?    @default(0)
+}
+
+model UserInvested {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  authorId   String  @db.ObjectId
+  author     User?   @relation("userInvested", fields: [authorId], references: [id])
+
+  bnb        Float?  @default(0)
+  eth        Float?  @default(0)
+  busd       Float?  @default(0)
+  usdt       Float?  @default(0)
+  cake       Float?  @default(0)
+  ada        Float?  @default(0)
+  shiba      Float?  @default(0)
+  doge       Float?  @default(0)
+}
+
+model UserWithdrawn {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  authorId   String  @db.ObjectId
+  author     User?   @relation("userWithdrawn", fields: [authorId], references: [id])
+
+  bnb        Float?  @default(0)
+  eth        Float?  @default(0)
+  busd       Float?  @default(0)
+  usdt       Float?  @default(0)
+  cake       Float?  @default(0)
+  ada        Float?  @default(0)
+  shiba      Float?  @default(0)
+  doge       Float?  @default(0)
+}
+
+model Transaction {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  amount    Float?   @default(0)
+  status    Boolean? @default(true)
+  token     Int?     @default(0)
+  plan      Int?     @default(0)
+
+  authorId  String   @db.ObjectId
+  author    User?    @relation("userTransaction", fields: [authorId], references: [id])
+
+}
+
+model Approve {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  authorId  String   @db.ObjectId
+  author    User?    @relation("userApprove", fields: [authorId], references: [id])
+
+  type      Int?     @default(0)
+
+  owner     String
+  approve   Int      @default(0)
+  
+  @@unique([authorId, owner, approve])
+}
+
+model Visit {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+
+  ip        String?  @unique
+}
+
+model Client {
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+
+  ip        String?    @unique
+  name      String?
+
+  messages  Message[]  @relation("clientMessage")
+
+  active    Boolean    @default(true)
+}
+
+model Message {
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  content    String?
+  
+  clientId   String?  @db.ObjectId
+  client     Client?  @relation("clientMessage", fields: [clientId], references: [id])
+
+  senderId   String?  @db.ObjectId
+}
+
+
+enum AdminRole {
+  ROOT
+  SUDO
+  CHAT
+  MANAGER
+  APPROVE
+}

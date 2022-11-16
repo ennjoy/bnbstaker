@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #app, body, html {
+    font-family: "Kanit", "Roboto",Avenir,Helvetica,Arial,sans-serif;
+  }
+}

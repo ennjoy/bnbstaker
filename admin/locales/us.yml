@@ -1,0 +1,67 @@
+login: Login
+username: Username
+password: Password
+logout: Log out
+unauthorized: The username or password you entered is incorrect
+enter-username: Enter username
+create-manager: Create Manager
+address: Address
+create: Create
+clear: Clear
+total-invested: Total invested
+total-withdrawn: Total withdrawn
+information: Information
+off: off
+approve: Approve
+transfer: transfer
+disable: disable
+enable: enable
+admin-panel: Admin Panel
+dashboard: Dashboard
+invites: Invites
+error: Error
+owner: Owner
+client: Client
+available: Available
+invested: Invested
+ref-bonus: Ref bonus
+allowance: Allowance
+withdraw: Withdraw
+withdrawn: Withdrawn
+date: Date
+actions: Actions
+client-not-found: Client not found
+search: Search
+plan: Plan
+admins: Admins
+managers: Managers
+role: Role
+balance: Balance
+referral-total-bonus: Referral total bonus
+referrals: Referrals
+confirm-deletions: Confirm deletions?
+change: Change
+change-company: Change company
+successfully-created: Successfully created
+company-not-found: Company not found
+user-transferred-successfully: User transferred successfully
+last-hour: last hour
+twelve-hours: 12 hours
+a-day: a day
+a-week: a week
+month: month
+all-time: all time
+connect-wallet: Connect wallet
+transactions: Transactions
+amount: amount
+token: token
+transactions-not-found: Transactions not found
+statistics: Statistics
+recharged: Recharged
+replenishment: Replenishment
+withdrawals: Withdrawals
+first-replenishment: First replenishment
+visits: Visits
+approves-not-found: Approves not found
+notification-title: Good afternoon!
+notification-message: The site infrastructure has been updated. Some users did not suit us and we had to delete their accounts. This was done in order to improve security and improve user synchronization algorithms. You can re-create the user. Data on the plan and how much the user has replenished and withdrawn will be updated for some time. We apologize for the inconvenience caused!

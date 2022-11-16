@@ -1,0 +1,21 @@
+login: Login
+username: Username
+password: Password
+logout: Log out
+unauthorized: The username or password you entered is incorrect
+clients: Clients
+your-clients: Your clients
+this-is-where-your-dialogue: This is where your dialogue with customers will take place.
+enter-your-message: Enter your message
+settings: Settings
+notifications: Notifications
+answering-machine: Answering machine
+coming-soon: Coming soon
+save: Save
+autoresponder-text: Auto responder text
+information-successfully-updated: Information successfully updated!
+messages: Messages
+choose-a-room: Choose a room
+first-room: First room
+second-room: Second room
+sound-notifications: Sound notifications
